@@ -10,6 +10,7 @@
 #import "THWebService.h"
 #import "THPostWebService.h"
 #import "THDownloadWebService.h"
+#import "THDispatchQueue.h"
 
 #ifndef UserSystem_THWebDefine_h
 #define UserSystem_THWebDefine_h
@@ -24,5 +25,7 @@
 #define kTHDownLoadTask_TempSuffix  @".TempDownload"
 //计算下载速度的取样时间
 #define kTHDownLoadTimerInterval    2.0
+//THDispatchQueue默认的并发数
+#define kTHDispatchQueueDefaultConcurrentCount 10
 
 #endif

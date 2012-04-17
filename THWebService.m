@@ -17,6 +17,7 @@
 - (void)dealloc
 {
 	[self stop];
+    NSLog(@"webservice dealloc");
 }
 
 - (void)stop

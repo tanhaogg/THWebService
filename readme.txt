@@ -2,6 +2,10 @@ THWebService是一个轻量级的网络访问管理类，对NSURLConnection进�
 
 注：代码采用ARC。
 
+1.1版本
+添加了THDispatchQueue，GCD实现的一个多线程并发控制的队列。
+添加了THWebDataCache，非常简单的缓存组件。
+
 1.0版本：
 
 1.对get、post(文件上传)、文件下载的接口的封装；
