@@ -59,9 +59,13 @@
     //未指定文件名
     if (!_fileName)
     {
+        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:_url MIMEType:NULL expectedContentLength:NULL textEncodingName:NULL];
+        _fileName = [response suggestedFilename];
+        /*
         NSString *urlStr = [_url absoluteString];
         _fileName = [urlStr lastPathComponent];
         if ([_fileName length] > 32) _fileName = [_fileName substringFromIndex:[_fileName length]-32];
+         */
     }
     
     //未指定路径
