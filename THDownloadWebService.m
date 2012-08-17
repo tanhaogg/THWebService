@@ -188,6 +188,7 @@
     {
         self.downloadBlock(NULL,error,0,NO);
     }
+    [super didFailWithError:error];
 }
 
 - (void)didFinishLoading
