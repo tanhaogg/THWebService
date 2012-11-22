@@ -27,5 +27,7 @@
 #define kTHDownLoadTimerInterval    2.0
 //THDispatchQueue默认的并发数
 #define kTHDispatchQueueDefaultConcurrentCount 10
+//缓存的文件夹
+#define kTHWebDataCacheDirectory    @"com.magican.datacache"
 
 #endif

@@ -47,7 +47,7 @@ static NSString *kBoundaryStr=@"_insert_some_boundary_here_";
             [result appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", [keys objectAtIndex:i]] dataUsingEncoding:encoding]];
 			[result appendData:value];
         }
-		[result appendData:[[NSString stringWithString:@"\r\n"] dataUsingEncoding:encoding]];
+		[result appendData:[@"\r\n" dataUsingEncoding:encoding]];
 	}
 	[result appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:encoding]];
 	

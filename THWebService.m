@@ -17,14 +17,12 @@
 - (void)dealloc
 {
 	[self stop];
-    NSLog(@"webservice dealloc");
 }
 
 - (void)stop
 {
     [_con cancel];
     _con = nil;
-    _data = nil;
 }
 
 - (NSURLRequest *)setUpRequest:(NSError **)error
@@ -120,6 +118,7 @@
 
 - (void)didFailWithError:(NSError *)error
 {
+    [self stop];
     if (self.webServiceBlock)
     {            
         self.webServiceBlock(NULL,error,NULL);
@@ -128,11 +127,11 @@
     {
 		[_delegate webServiceFail:self didFailWithError:error];
 	}
-    [self stop];
 }
 
 - (void)didFinishLoading
 {
+    [self stop];
     if (self.webServiceBlock)
     {            
         self.webServiceBlock(NULL,NULL,_data);
@@ -141,7 +140,6 @@
     {        
 		[_delegate webServiceFinish:self didReceiveData:_data];
 	}
-    [self stop];
 }
 
 #pragma mark -

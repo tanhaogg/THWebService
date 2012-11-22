@@ -59,7 +59,7 @@
     //未指定文件名
     if (!_fileName)
     {
-        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:_url MIMEType:NULL expectedContentLength:NULL textEncodingName:NULL];
+        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:_url MIMEType:NULL expectedContentLength:0 textEncodingName:NULL];
         _fileName = [response suggestedFilename];
         /*
         NSString *urlStr = [_url absoluteString];
@@ -145,17 +145,18 @@
     peakSpeed = onceDownSize/onceTimeGap;
     onceDownSize = 0;
     
+    double progress = 0;
     if (fileSize > 0)
     {
-        double progress = offset*1.0/fileSize;
-        if ([_delegate respondsToSelector:@selector(downloadProgressChange:progress:)])
-        {
-            [[self delegate] downloadProgressChange:self progress:progress];
-        }
-        if (self.downloadBlock)
-        {
-            self.downloadBlock(NULL,NULL,progress,NO);
-        }
+        progress = offset*1.0/fileSize;
+    }
+    if ([_delegate respondsToSelector:@selector(downloadProgressChange:progress:)])
+    {
+        [[self delegate] downloadProgressChange:self progress:progress];
+    }
+    if (self.downloadBlock)
+    {
+        self.downloadBlock(NULL,NULL,progress,NO);
     }
 }
 
@@ -168,11 +169,11 @@
     {
         fileSize = [response expectedContentLength] + offset;
     }
+    [super didReceiveResponse:response];
     if (self.downloadBlock)
     {
         self.downloadBlock(response,NULL,0,NO);
     }
-    [super didReceiveResponse:response];
 }
 
 - (void)didReceiveData:(NSData *)aData
@@ -184,21 +185,21 @@
 
 - (void)didFailWithError:(NSError *)error
 {
+    [super didFailWithError:error];
     if (self.downloadBlock)
     {
         self.downloadBlock(NULL,error,0,NO);
     }
-    [super didFailWithError:error];
 }
 
 - (void)didFinishLoading
 {
     [[NSFileManager defaultManager] moveItemAtPath:_temporaryPath toPath:_destinationPath error:nil];
+    [super didFinishLoading];
     if (self.downloadBlock)
     {
         self.downloadBlock(NULL,NULL,0,YES);
     }
-    [super didFinishLoading];
 }
 
 @end
