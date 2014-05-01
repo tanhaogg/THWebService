@@ -18,6 +18,13 @@
 @synthesize averageSpeed;
 @synthesize downloadBlock;
 
++ (void)serviceWithUrl:(NSURL *)url handler:(THDownloadWebServiceBlock)block
+{
+    THDownloadWebService *service = [[[self class] alloc] init];
+    service.url = url;
+    [service startWithHandler:block];
+}
+
 - (void)setDelegate:(id)anObject
 {
     _delegate = anObject;

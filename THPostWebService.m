@@ -39,7 +39,7 @@ static NSString *kBoundaryStr=@"_insert_some_boundary_here_";
 		else if ([value isKindOfClass:[NSURL class]] && [value isFileURL])
 		{
 			[result appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", [keys objectAtIndex:i], [[value path] lastPathComponent]] dataUsingEncoding:encoding]];
-			[result appendData:[[NSString stringWithString:@"Content-Type: application/octet-stream\r\n\r\n"] dataUsingEncoding:encoding]];
+			[result appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:encoding]];
 			[result appendData:[NSData dataWithContentsOfFile:[value path]]];
 		}
         else if ([value isKindOfClass:[NSData class]])
@@ -77,7 +77,7 @@ static NSString *kBoundaryStr=@"_insert_some_boundary_here_";
     
     //按照HTTP的相关协议格式化数据
     NSData *postData=[self generateFormData:_postDic];
-    [request addValue:[NSString stringWithFormat:@"%d",[postData length]] forHTTPHeaderField:@"Content-Length"];
+    [request addValue:[NSString stringWithFormat:@"%ld",[postData length]] forHTTPHeaderField:@"Content-Length"];
 	[request setHTTPBody:postData];
     if (error) *error = NULL;
     return request;

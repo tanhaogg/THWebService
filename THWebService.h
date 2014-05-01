@@ -29,6 +29,9 @@ typedef void (^THWebServiceBlock) (NSURLResponse *response, NSError *error, NSDa
 - (NSData *)startSynchronous;
 - (void)startWithHandler:(THWebServiceBlock)block;
 
++ (NSData *)dataWithUrl:(NSURL *)url;
++ (void)serviceWithUrl:(NSURL *)url handler:(THWebServiceBlock)block;
+
 @end
 
 @interface THWebService()

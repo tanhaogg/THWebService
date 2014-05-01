@@ -67,6 +67,8 @@ typedef void(^THDownloadWebServiceBlock)(NSURLResponse *response, NSError *error
 
 - (void)startWithHandler:(THDownloadWebServiceBlock)block;
 
++ (void)serviceWithUrl:(NSURL *)url handler:(THDownloadWebServiceBlock)block;
+
 @end
 
 

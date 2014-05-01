@@ -147,7 +147,7 @@
     return hashString;
 }
 
-+ (NSString *)hashData:(NSData *)data with:(THHashKind)hashKind
++ (NSData *)hashData:(NSData *)data with:(THHashKind)hashKind
 {
     if (!data)
     {
@@ -201,7 +201,9 @@
         [hashString appendFormat:@"%02x",digest[i]];
     }
     free(digest);
-    return hashString; 
+    
+    NSData *hash = [[NSData alloc] initWithBytes:digest length:digestLength];
+    return hash;
 }
 
 + (NSString *)hashString:(NSString *)string with:(THHashKind)hashKind
@@ -211,13 +213,22 @@
     {
         return nil;
     }
-    return [self hashData:data with:hashKind];
+    NSData *resultData = [self hashData:data with:hashKind];
+    
+    NSMutableString *hashString = [NSMutableString string];
+    const unsigned char *digest = [resultData bytes];
+    for (size_t i = 0; i< [resultData length]; i++)
+    {
+        [hashString appendFormat:@"%02x",digest[i]];
+    }
+    
+    return hashString;
 }
 
 #pragma mark -
 #pragma mark HMAC
 
-+ (NSString *)hMacData:(NSData *)data withSecretKey:(NSString *)secretKey withHashKind:(THHashKind)hashKind
++ (NSData *)hMacData:(NSData *)data withSecretKey:(NSString *)secretKey withHashKind:(THHashKind)hashKind
 {
     if (!data || !secretKey)
     {
@@ -263,11 +274,7 @@
     unsigned char cHMAC[digestLength];
     CCHmac(algorithm, cKey, strlen(cKey), data.bytes, data.length, cHMAC);
     
-    NSMutableString* hash = [NSMutableString  string];
-    for(int i = 0; i < sizeof(cHMAC); i++)
-    {
-        [hash appendFormat:@"%02x", cHMAC[i]];
-    }    
+    NSData *hash = [[NSData alloc] initWithBytes:cHMAC length:digestLength];
     return hash;
 }
 
@@ -278,7 +285,8 @@
     {
         return nil;
     }
-    return [self hMacData:data withSecretKey:secretKey withHashKind:hashKind];
+    NSData *hashData = [self hMacData:data withSecretKey:secretKey withHashKind:hashKind];
+    return [[NSString alloc] initWithData:hashData encoding:NSUTF8StringEncoding];
 }
 
 @end

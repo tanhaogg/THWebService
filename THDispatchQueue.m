@@ -28,12 +28,6 @@
     return [self initWithConcurrentCount:kTHDispatchQueueDefaultConcurrentCount];
 }
 
-- (void)dealloc
-{
-    dispatch_release(semaphore);
-    dispatch_release(queue);
-}
-
 - (void)addOperation:(THQueueOperationBlock)block
 {
     dispatch_async(queue, ^{

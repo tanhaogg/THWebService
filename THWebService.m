@@ -14,6 +14,20 @@
 @synthesize url=_url;
 @synthesize webServiceBlock;
 
++ (NSData *)dataWithUrl:(NSURL *)url
+{
+    THWebService *service = [[[self class] alloc] init];
+    service.url = url;
+    return [service startSynchronous];
+}
+
++ (void)serviceWithUrl:(NSURL *)url handler:(THWebServiceBlock)block
+{
+    THWebService *service = [[[self class] alloc] init];
+    service.url = url;
+    [service startWithHandler:block];
+}
+
 - (void)dealloc
 {
 	[self stop];

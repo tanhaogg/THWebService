@@ -21,11 +21,11 @@ typedef NSInteger THHashKind;
 
 //Hash 算法
 + (NSString *)hashFile:(NSString *)filePath with:(THHashKind)hashKind;
-+ (NSString *)hashData:(NSData *)data with:(THHashKind)hashKind;
++ (NSData *)hashData:(NSData *)data with:(THHashKind)hashKind;
 + (NSString *)hashString:(NSString *)string with:(THHashKind)hashKind;
 
 //HMAC 算法 (keyed-Hash Message Authentication Code,密钥相关的哈希运算消息认证码)
-+ (NSString *)hMacData:(NSData *)data withSecretKey:(NSString *)secretKey withHashKind:(THHashKind)hashKind;
++ (NSData *)hMacData:(NSData *)data withSecretKey:(NSString *)secretKey withHashKind:(THHashKind)hashKind;
 + (NSString *)hMacString:(NSString *)string withSecretKey:(NSString *)secretKey withHashKind:(THHashKind)hashKind;
 
 @end
